@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import './App.css';
+import Form from './Form';
 import TodoItems from './TodoItems';
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <TodoItems items={this.state.items} editItem={this.editItem} removeItem={this.removeItem} />
+        <Form />
       </div>
     )
   }
