@@ -55,13 +55,18 @@ class App extends Component {
   }
 
   // Remove Item
-  removeItem = (index) => {
-    const {items} = this.state;
-    this.setState({
-      items: items.filter((todo, i) => {
-        return i !== index
-      })
-    })
+  removeItem = (index, docId) => {
+    db.collection("items").doc(docId).delete().then(() => {
+        const {items} = this.state;
+        this.setState({
+          items: items.filter((todo, i) => {
+            return i !== index
+          })
+        })
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
+    });
   }
 
   // Edit / Update Item
