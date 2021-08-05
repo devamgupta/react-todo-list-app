@@ -12,6 +12,12 @@ class Form extends Component {
         });
     }
 
+    // Submit Form
+    submitForm = () => {
+        this.props.handleSubmit(this.state.input);
+        this.setState({input: ""});
+    }
+
     // Render
     render() {
         return (
@@ -20,8 +26,8 @@ class Form extends Component {
                     value={this.state.input}
                     onChange={this.handleChange}
                 />
-                <button disabled={!this.state.input} >
-                    Add
+                <button disabled={!this.state.input} onClick={this.submitForm}>
+                    #{this.props.numItems+1} Add
                 </button>
             </div>
         )

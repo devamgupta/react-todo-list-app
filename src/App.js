@@ -8,7 +8,14 @@ class App extends Component {
     items: ["Go for a walk.", "Complete assignment.", "Have Lunch."],
   };
 
-  // Remove
+  // Add Item
+  addItem = (todo) => {
+    this.setState({
+      items: [todo, ...this.state.items],
+    })
+  }
+
+  // Remove Item
   removeItem = (index) => {
     const {items} = this.state;
     this.setState({
@@ -18,7 +25,7 @@ class App extends Component {
     })
   }
 
-  // Edit / Update
+  // Edit / Update Item
   editItem = (index) => {
     const {items} = this.state;
     const userInput = prompt("Enter the new value", items[index]);
@@ -38,7 +45,8 @@ class App extends Component {
     return (
       <div className="App">
         <TodoItems items={this.state.items} editItem={this.editItem} removeItem={this.removeItem} />
-        <Form />
+        
+        <Form handleSubmit={this.addItem} numItems={this.state.items.length} />
       </div>
     )
   }
