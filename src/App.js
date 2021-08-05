@@ -16,11 +16,27 @@ class App extends Component {
       })
     })
   }
-  
+
+  // Edit / Update
+  editItem = (index) => {
+    const {items} = this.state;
+    const userInput = prompt("Enter the new value", items[index]);
+    if (userInput) {
+      const {items} = this.state;
+      items[index] = userInput;
+      this.setState({
+        items: items,
+      })
+    } else {
+      alert("Can't add empty item!");
+    }
+  }
+
+  // Render
   render() {
     return (
       <div className="App">
-        <TodoItems items={this.state.items} removeItem={this.removeItem} />
+        <TodoItems items={this.state.items} editItem={this.editItem} removeItem={this.removeItem} />
       </div>
     )
   }

@@ -1,14 +1,16 @@
 import React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 function TodoItems(props) {
-    const { items, removeItem } = props;
+    const { items, removeItem, editItem } = props;
 
     const rows = items.map((todo, index) => {
                     return (
                         <li>
                             {todo}
                             <DeleteIcon onClick={() => removeItem(index)} />
+                            <EditIcon onClick={() => editItem(index)} />
                         </li>
                         
                     )
