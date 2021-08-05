@@ -1,11 +1,16 @@
 import { Component } from 'react';
 import './App.css';
+import TodoItems from './TodoItems';
 
 class App extends Component {
+  state = {
+    items: ["Go for a walk.", "Complete assignment.", "Have Lunch."],
+  };
+
   render() {
     return (
       <div className="App">
-        <h1>Todo App</h1>
+        <TodoItems items={this.state.items} />
       </div>
     )
   }
