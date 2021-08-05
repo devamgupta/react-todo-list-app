@@ -10,7 +10,7 @@ function TodoItems(props) {
                         <li>
                             {item.todo}
                             <DeleteIcon onClick={() => removeItem(index, item.id)} />
-                            <EditIcon onClick={() => editItem(index)} />
+                            <EditIcon onClick={() => editItem(index, item.id)} />
                         </li>
                         
                     )

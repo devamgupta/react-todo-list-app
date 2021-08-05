@@ -70,15 +70,43 @@ class App extends Component {
   }
 
   // Edit / Update Item
-  editItem = (index) => {
+  updateItem = (todo, index, docId) => {
+    db.collection("items").doc(docId).update({
+      todo: todo,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(() => {
+        const {items} = this.state;
+        const item = {
+          id: items[index].id,
+          todo: todo,
+        }
+        // removing item from the list
+        this.setState({
+          items: items.filter((todo, i) => {
+            return i !== index
+          })
+        })
+        // Adding the element to the beginning of the list
+        this.setState({
+          items: [item, ...this.state.items],
+        })
+        console.log("Document successfully updated!");
+    })
+    .catch((error) => {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
+  }
+
+  editItem = (index, docId) => {
     const {items} = this.state;
     const userInput = prompt("Enter the new value", items[index].todo);
-    if (userInput) {
-      const {items} = this.state;
-      items[index].todo = userInput;
-      this.setState({
-        items: items,
-      })
+    // If user entered empty string or didn't change any thing
+    if (userInput === items[index].todo) {
+      // do nothing
+    } else if (userInput) {
+      this.updateItem(userInput, index, docId);
     } else {
       alert("Can't add empty item!");
     }
