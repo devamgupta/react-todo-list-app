@@ -20,8 +20,12 @@ class App extends Component {
     db.collection("items").orderBy("timestamp", "desc").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           // console.log(doc.id)
+          const item = {
+            id: doc.id,
+            todo: doc.data().todo,
+          }
           this.setState({
-            items: [...this.state.items, doc.data().todo]
+            items: [...this.state.items, item],
           })
         });
     });
@@ -36,8 +40,12 @@ class App extends Component {
     .then((docRef) => {
         // data is succesessfully added
         // do anything you want now
+        const item = {
+          id: docRef.id,
+          todo: todo,
+        }
         this.setState({
-          items: [todo, ...this.state.items],
+          items: [item, ...this.state.items],
         })
         console.log("Document written with ID: ", docRef.id);
     })
@@ -59,10 +67,10 @@ class App extends Component {
   // Edit / Update Item
   editItem = (index) => {
     const {items} = this.state;
-    const userInput = prompt("Enter the new value", items[index]);
+    const userInput = prompt("Enter the new value", items[index].todo);
     if (userInput) {
       const {items} = this.state;
-      items[index] = userInput;
+      items[index].todo = userInput;
       this.setState({
         items: items,
       })

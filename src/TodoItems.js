@@ -5,10 +5,10 @@ import EditIcon from '@material-ui/icons/Edit';
 function TodoItems(props) {
     const { items, removeItem, editItem } = props;
 
-    const rows = items.map((todo, index) => {
+    const rows = items.map((item, index) => {
                     return (
                         <li>
-                            {todo}
+                            {item.todo}
                             <DeleteIcon onClick={() => removeItem(index)} />
                             <EditIcon onClick={() => editItem(index)} />
                         </li>
