@@ -10,6 +10,23 @@ class App extends Component {
     items: [],
   };
 
+  //  It runs after the component output has been rendered to the DOM
+  componentDidMount() {
+    this.loadItems();
+  }
+
+  // Get / Load data from firebase
+  loadItems = () => {
+    db.collection("items").orderBy("timestamp", "desc").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id)
+          this.setState({
+            items: [...this.state.items, doc.data().todo]
+          })
+        });
+    });
+  }
+
   // Add / Upload Item
   addItem = (todo) => {
     db.collection("items").add({
