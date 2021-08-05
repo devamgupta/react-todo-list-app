@@ -2,17 +2,31 @@ import { Component } from 'react';
 import './App.css';
 import Form from './Form';
 import TodoItems from './TodoItems';
+import db from './firebase.js';
+import firebase from "firebase/app";
 
 class App extends Component {
   state = {
-    items: ["Go for a walk.", "Complete assignment.", "Have Lunch."],
+    items: [],
   };
 
-  // Add Item
+  // Add / Upload Item
   addItem = (todo) => {
-    this.setState({
-      items: [todo, ...this.state.items],
+    db.collection("items").add({
+        todo: todo,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     })
+    .then((docRef) => {
+        // data is succesessfully added
+        // do anything you want now
+        this.setState({
+          items: [todo, ...this.state.items],
+        })
+        console.log("Document written with ID: ", docRef.id);
+    })
+    .catch((error) => {
+        console.error("Error adding document: ", error);
+    });
   }
 
   // Remove Item
